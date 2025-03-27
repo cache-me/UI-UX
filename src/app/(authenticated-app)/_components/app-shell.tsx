@@ -1,9 +1,9 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
-import Image from "next/image";
-import Link from "next/link";
+import { useState } from "react"
+import { usePathname, useRouter } from "next/navigation"
+import Image from "next/image"
+import Link from "next/link"
 import {
   BellIcon,
   CalendarIcon,
@@ -22,9 +22,9 @@ import {
   HeadphonesIcon,
   PlusIcon,
   SearchIcon,
-} from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+} from "lucide-react"
+import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -32,38 +32,39 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import Spinner from "@/components/ui/spinner";
+} from "@/components/ui/dropdown-menu"
+import Spinner from "@/components/ui/spinner"
+import { ThemeToggle } from "./theme-toggle"
 
 type SidebarItem = {
-  type: "link" | "dropdown";
-  icon: React.ElementType;
-  path?: string;
-  label: string;
+  type: "link" | "dropdown"
+  icon: React.ElementType
+  path?: string
+  label: string
   children?: {
-    icon: React.ElementType;
-    path: string;
-    label: string;
-  }[];
-};
+    icon: React.ElementType
+    path: string
+    label: string
+  }[]
+}
 
 type AppShellProps = {
-  children: React.ReactNode;
-  className?: string;
-  style?: React.CSSProperties;
-};
+  children: React.ReactNode
+  className?: string
+  style?: React.CSSProperties
+}
 
 export default function AppShell({
   children,
   className,
   style,
 }: AppShellProps) {
-  const router = useRouter();
-  const pathname = usePathname();
-  const [collapsed, setCollapsed] = useState(false);
+  const router = useRouter()
+  const pathname = usePathname()
+  const [collapsed, setCollapsed] = useState(false)
   const [expandedDropdowns, setExpandedDropdowns] = useState<
     Record<string, boolean>
-  >({});
+  >({})
 
   const NAVIGATION_ITEMS: SidebarItem[] = [
     {
@@ -114,7 +115,7 @@ export default function AppShell({
       path: "/documents",
       label: "Documents",
     },
-  ];
+  ]
 
   const FAVORITE_ITEMS = [
     {
@@ -135,23 +136,23 @@ export default function AppShell({
       key: "3",
       color: "text-secondary",
     },
-  ];
+  ]
 
   const isPathActive = (path?: string) => {
-    if (!path) return false;
-    return pathname === path || (path !== "/" && pathname.startsWith(path));
-  };
+    if (!path) return false
+    return pathname === path || (path !== "/" && pathname.startsWith(path))
+  }
 
   const toggleDropdown = (itemLabel: string) => {
     setExpandedDropdowns((prev) => ({
       ...prev,
       [itemLabel]: !prev[itemLabel],
-    }));
-  };
+    }))
+  }
 
   const toggleSidebar = () => {
-    setCollapsed(!collapsed);
-  };
+    setCollapsed(!collapsed)
+  }
 
   const renderNavItem = (item: SidebarItem) => {
     if (item.type === "link") {
@@ -162,7 +163,7 @@ export default function AppShell({
             "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
             isPathActive(item.path)
               ? "bg-primary/10 text-primary dark:bg-primary/30 dark:text-primary"
-              : "hover:bg-accent dark:hover:bg-accent"
+              : "hover:bg-accent dark:hover:bg-accent",
           )}
         >
           <item.icon className="h-5 w-5" />
@@ -171,10 +172,10 @@ export default function AppShell({
             <div className="ml-auto h-2 w-2 rounded-full bg-primary dark:bg-primary"></div>
           )}
         </Link>
-      );
+      )
     }
 
-    const isExpanded = expandedDropdowns[item.label] || false;
+    const isExpanded = expandedDropdowns[item.label] || false
 
     return (
       <div>
@@ -184,7 +185,7 @@ export default function AppShell({
             "flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
             isExpanded
               ? "bg-accent dark:bg-accent"
-              : "hover:bg-accent dark:hover:bg-accent"
+              : "hover:bg-accent dark:hover:bg-accent",
           )}
         >
           <item.icon className="h-5 w-5" />
@@ -194,7 +195,7 @@ export default function AppShell({
               <ChevronDownIcon
                 className={cn(
                   "h-4 w-4 transition-transform",
-                  isExpanded ? "rotate-180" : ""
+                  isExpanded ? "rotate-180" : "",
                 )}
               />
             </>
@@ -211,7 +212,7 @@ export default function AppShell({
                   "flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors",
                   isPathActive(child.path)
                     ? "bg-primary/10 text-primary dark:bg-primary/30 dark:text-primary"
-                    : "hover:bg-accent dark:hover:bg-accent"
+                    : "hover:bg-accent dark:hover:bg-accent",
                 )}
               >
                 <child.icon className="h-4 w-4" />
@@ -221,24 +222,24 @@ export default function AppShell({
           </div>
         )}
       </div>
-    );
-  };
+    )
+  }
 
   return (
     <div
       className={cn(
         "flex h-screen bg-background dark:bg-background",
-        className
+        className,
       )}
       style={style}
     >
       <div
         className={cn(
           "flex flex-col border-r border-border bg-card transition-all duration-300 dark:border-border dark:bg-card",
-          collapsed ? "w-16" : "w-64"
+          collapsed ? "w-16" : "w-64",
         )}
       >
-        <div className="flex items-center gap-3 border-b border-border px-4 py-4 dark:border-border">
+        <div className="flex items-center gap-3 border-b px-4 py-4">
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-primary">
             <svg
               width="20"
@@ -285,7 +286,7 @@ export default function AppShell({
             <ChevronRightIcon
               className={cn(
                 "h-4 w-4 transition-transform",
-                collapsed ? "rotate-180" : ""
+                collapsed ? "rotate-180" : "",
               )}
             />
           </button>
@@ -297,7 +298,7 @@ export default function AppShell({
               MAIN
             </div>
           )}
-          <div className="space-y-1">
+          <div className="space-y-1 text-muted-foreground/90">
             {NAVIGATION_ITEMS.map((item) => (
               <div key={item.label}>{renderNavItem(item)}</div>
             ))}
@@ -308,6 +309,7 @@ export default function AppShell({
               FAVS
             </div>
           )}
+
           <div className="space-y-1">
             {FAVORITE_ITEMS.map((item) => (
               <div
@@ -344,17 +346,17 @@ export default function AppShell({
               </Link>
             </div>
           </div>
-          <div className="border-border p-3 dark:border-border">
+          <div className="border-border border-t p-3 dark:border-border">
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="flex w-full items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors hover:bg-accent dark:hover:bg-accent">
                   <div className="relative h-8 w-8 overflow-hidden rounded-full">
-                    <Image
+                    {/* <Image
                       src=""
                       alt="User avatar"
                       fill
                       className="object-cover"
-                    />
+                    /> */}
                     <div className="absolute bottom-0 right-0 h-3 w-3 rounded-full border-2 border-background bg-green-500 dark:border-background" />
                   </div>
                   {!collapsed && (
@@ -399,6 +401,7 @@ export default function AppShell({
           </button>
 
           <div className="flex items-center gap-4">
+            <ThemeToggle />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <button className="rounded-full p-2 text-muted-foreground hover:bg-accent dark:hover:bg-accent">
@@ -494,12 +497,12 @@ export default function AppShell({
               <DropdownMenuTrigger asChild>
                 <button className="relative flex items-center gap-2 rounded-full text-left text-sm hover:bg-accent dark:hover:bg-accent">
                   <div className="relative h-8 w-8 overflow-hidden rounded-full">
-                    <Image
-                      src=""
+                    {/* <Image
+                      src=""git
                       alt="User avatar"
                       fill
                       className="object-cover"
-                    />
+                    /> */}
                     <div className="absolute bottom-0 right-0 h-2.5 w-2.5 rounded-full border-2 border-background bg-green-500 dark:border-background" />
                   </div>
                 </button>
@@ -534,5 +537,5 @@ export default function AppShell({
         </main>
       </div>
     </div>
-  );
+  )
 }
